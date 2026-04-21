@@ -1,0 +1,18 @@
+{
+  "name": "shopping-car-frontend",
+  "version": "1.0.0",
+  "description": "Frontend para sistema de carrito de compras",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .js"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
+    "eslint": "^8.56.0",
+    "vite": "^5.0.8"
+  },
+  "dependencies": {}
+}

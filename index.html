@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shopping Car - Panel de Gestión</title>
+  <link rel="stylesheet" href="src/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span>Shopping Car</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="dashboard">
+        <i class="fa-solid fa-gauge-high"></i><span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-item" data-section="clientes">
+        <i class="fa-solid fa-users"></i><span>Clientes</span>
+      </a>
+      <a href="#" class="nav-item" data-section="productos">
+        <i class="fa-solid fa-box-open"></i><span>Productos</span>
+      </a>
+      <a href="#" class="nav-item" data-section="facturas">
+        <i class="fa-solid fa-file-invoice-dollar"></i><span>Facturas</span>
+      </a>
+      <a href="#" class="nav-item" data-section="detalles">
+        <i class="fa-solid fa-list-check"></i><span>Detalle Factura</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-wrapper">
+    <header class="topbar">
+      <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+      <h1 class="topbar-title" id="topbarTitle">Dashboard</h1>
+      <div class="topbar-right">
+        <span class="badge-api" id="apiStatus"><i class="fa-solid fa-circle"></i> API</span>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- DASHBOARD -->
+      <section id="section-dashboard" class="section active">
+        <div class="stats-grid">
+          <div class="stat-card" style="--accent:#6366f1">
+            <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+            <div class="stat-info">
+              <span class="stat-num" id="stat-clientes">0</span>
+              <span class="stat-label">Clientes</span>
+            </div>
+          </div>
+          <div class="stat-card" style="--accent:#10b981">
+            <div class="stat-icon"><i class="fa-solid fa-box-open"></i></div>
+            <div class="stat-info">
+              <span class="stat-num" id="stat-productos">0</span>
+              <span class="stat-label">Productos</span>
+            </div>
+          </div>
+          <div class="stat-card" style="--accent:#f59e0b">
+            <div class="stat-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+            <div class="stat-info">
+              <span class="stat-num" id="stat-facturas">0</span>
+              <span class="stat-label">Facturas</span>
+            </div>
+          </div>
+          <div class="stat-card" style="--accent:#ef4444">
+            <div class="stat-icon"><i class="fa-solid fa-list-check"></i></div>
+            <div class="stat-info">
+              <span class="stat-num" id="stat-detalles">0</span>
+              <span class="stat-label">Detalles</span>
+            </div>
+          </div>
+        </div>
+        <div class="welcome-card">
+          <h2><i class="fa-solid fa-rocket"></i> Bienvenido al Panel de Gestión</h2>
+          <p>Administra clientes, productos, facturas y detalles de factura desde un solo lugar. Usa el menú lateral para navegar entre módulos.</p>
+        </div>
+      </section>
+
+      <!-- CLIENTES -->
+      <section id="section-clientes" class="section">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-users"></i> Clientes</h2>
+          <button class="btn btn-primary" onclick="openModal('modal-cliente')">
+            <i class="fa-solid fa-plus"></i> Nuevo Cliente
+          </button>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>ID</th><th>Nombre</th><th>Documento</th><th>Método Pago</th><th>Dirección</th><th>Acciones</th></tr>
+            </thead>
+            <tbody id="tbody-clientes">
+              <tr><td colspan="6" class="loading">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- PRODUCTOS -->
+      <section id="section-productos" class="section">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-box-open"></i> Productos</h2>
+          <button class="btn btn-primary" onclick="openModal('modal-producto')">
+            <i class="fa-solid fa-plus"></i> Nuevo Producto
+          </button>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>ID</th><th>Código</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Marca</th><th>Acciones</th></tr>
+            </thead>
+            <tbody id="tbody-productos">
+              <tr><td colspan="7" class="loading">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- FACTURAS -->
+      <section id="section-facturas" class="section">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-file-invoice-dollar"></i> Facturas</h2>
+          <button class="btn btn-primary" onclick="openModal('modal-factura')">
+            <i class="fa-solid fa-plus"></i> Nueva Factura
+          </button>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>ID</th><th>Fecha</th><th>Cliente</th><th>Total Bruto</th><th>Descuento</th><th>IVA</th><th>Total Neto</th><th>Acciones</th></tr>
+            </thead>
+            <tbody id="tbody-facturas">
+              <tr><td colspan="8" class="loading">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- DETALLES -->
+      <section id="section-detalles" class="section">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-list-check"></i> Detalle Factura</h2>
+          <button class="btn btn-primary" onclick="openModal('modal-detalle')">
+            <i class="fa-solid fa-plus"></i> Nuevo Detalle
+          </button>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr><th>ID</th><th>Factura</th><th>Producto</th><th>Cantidad</th><th>Valor Unit.</th><th>Descuento %</th><th>IVA %</th><th>Total Neto</th><th>Acciones</th></tr>
+            </thead>
+            <tbody id="tbody-detalles">
+              <tr><td colspan="9" class="loading">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===== MODALES ===== -->
+
+  <!-- Modal Cliente -->
+  <div class="modal-overlay" id="modal-cliente">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-cliente-title"><i class="fa-solid fa-user-plus"></i> Nuevo Cliente</h3>
+        <button class="modal-close" onclick="closeModal('modal-cliente')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-cliente" onsubmit="submitCliente(event)">
+        <input type="hidden" id="cliente-id"/>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nombre *</label>
+            <input type="text" id="cliente-nombre" placeholder="Nombre completo" required maxlength="50"/>
+          </div>
+          <div class="form-group">
+            <label>Documento *</label>
+            <input type="text" id="cliente-documento" placeholder="Número de documento" required maxlength="20"/>
+          </div>
+          <div class="form-group">
+            <label>Método de Pago *</label>
+            <select id="cliente-metodoPago" required>
+              <option value="">Seleccionar...</option>
+              <option value="Efectivo">Efectivo</option>
+              <option value="Tarjeta Crédito">Tarjeta Crédito</option>
+              <option value="Tarjeta Débito">Tarjeta Débito</option>
+              <option value="Transferencia">Transferencia Bancaria</option>
+              <option value="PSE">PSE</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Dirección</label>
+            <input type="text" id="cliente-direccion" placeholder="Dirección (opcional)" maxlength="50"/>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-cliente')">Cancelar</button>
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Producto -->
+  <div class="modal-overlay" id="modal-producto">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-producto-title"><i class="fa-solid fa-box"></i> Nuevo Producto</h3>
+        <button class="modal-close" onclick="closeModal('modal-producto')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-producto" onsubmit="submitProducto(event)">
+        <input type="hidden" id="producto-id"/>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Código *</label>
+            <input type="text" id="producto-codigo" placeholder="Ej: PROD001" required maxlength="10"/>
+          </div>
+          <div class="form-group">
+            <label>Nombre *</label>
+            <input type="text" id="producto-nombre" placeholder="Nombre del producto" required maxlength="10"/>
+          </div>
+          <div class="form-group">
+            <label>Precio *</label>
+            <input type="number" id="producto-precio" placeholder="0.00" required min="0" step="0.1"/>
+          </div>
+          <div class="form-group">
+            <label>Stock *</label>
+            <input type="number" id="producto-stock" placeholder="0" required min="0"/>
+          </div>
+          <div class="form-group form-full">
+            <label>Marca</label>
+            <input type="text" id="producto-marca" placeholder="Marca (opcional)" maxlength="100"/>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-producto')">Cancelar</button>
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Factura -->
+  <div class="modal-overlay" id="modal-factura">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-factura-title"><i class="fa-solid fa-file-invoice"></i> Nueva Factura</h3>
+        <button class="modal-close" onclick="closeModal('modal-factura')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-factura" onsubmit="submitFactura(event)">
+        <input type="hidden" id="factura-id"/>
+        <div class="form-grid">
+          <div class="form-group form-full">
+            <label>Cliente *</label>
+            <select id="factura-cliente" required>
+              <option value="">Seleccionar cliente...</option>
+            </select>
+          </div>
+          <div class="form-group form-full">
+            <label>Fecha *</label>
+            <input type="datetime-local" id="factura-fecha" required/>
+          </div>
+          <div class="form-group">
+            <label>Total Bruto *</label>
+            <input type="number" id="factura-totalBruto" placeholder="0.00" required min="0" step="0.1"/>
+          </div>
+          <div class="form-group">
+            <label>Total Descuento *</label>
+            <input type="number" id="factura-totalDescuento" placeholder="0.00" required min="0" step="0.1"/>
+          </div>
+          <div class="form-group">
+            <label>Total IVA *</label>
+            <input type="number" id="factura-totalIva" placeholder="0.00" required min="0" step="0.1"/>
+          </div>
+          <div class="form-group">
+            <label>Total Neto *</label>
+            <input type="number" id="factura-totalNeto" placeholder="0.00" required min="0" step="0.1"/>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-factura')">Cancelar</button>
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Detalle Factura -->
+  <div class="modal-overlay" id="modal-detalle">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-detalle-title"><i class="fa-solid fa-list-check"></i> Nuevo Detalle</h3>
+        <button class="modal-close" onclick="closeModal('modal-detalle')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-detalle" onsubmit="submitDetalle(event)">
+        <input type="hidden" id="detalle-id"/>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Factura *</label>
+            <select id="detalle-factura" required>
+              <option value="">Seleccionar factura...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Producto *</label>
+            <select id="detalle-producto" required onchange="autoFillPrecio()">
+              <option value="">Seleccionar producto...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Cantidad *</label>
+            <input type="number" id="detalle-cantidad" placeholder="1" required min="1" oninput="calcularTotales()"/>
+          </div>
+          <div class="form-group">
+            <label>Valor Unitario *</label>
+            <input type="number" id="detalle-valorUnitario" placeholder="0.00" required min="0" step="0.1" oninput="calcularTotales()"/>
+          </div>
+          <div class="form-group">
+            <label>% Descuento *</label>
+            <input type="number" id="detalle-porcentajeDescuento" placeholder="0" required min="0" max="100" step="0.1" oninput="calcularTotales()"/>
+          </div>
+          <div class="form-group">
+            <label>% IVA *</label>
+            <input type="number" id="detalle-porcentajeIva" placeholder="19" required min="0" max="100" step="0.1" oninput="calcularTotales()"/>
+          </div>
+          <div class="form-group">
+            <label>Total Bruto</label>
+            <input type="number" id="detalle-totalBruto" readonly placeholder="0.00" step="0.1"/>
+          </div>
+          <div class="form-group">
+            <label>Total Neto</label>
+            <input type="number" id="detalle-totalNeto" readonly placeholder="0.00" step="0.1"/>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-detalle')">Cancelar</button>
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Confirmación -->
+  <div class="modal-overlay" id="modal-confirm">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-triangle-exclamation"></i> Confirmar eliminación</h3>
+      </div>
+      <div style="padding:1.5rem;text-align:center">
+        <p id="confirm-msg" style="color:var(--text2)">¿Estás seguro de eliminar este registro?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-confirm')">Cancelar</button>
+        <button class="btn btn-danger" id="confirm-ok"><i class="fa-solid fa-trash"></i> Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script type="module" src="src/js/app.js"></script>
+</body>
+</html>
